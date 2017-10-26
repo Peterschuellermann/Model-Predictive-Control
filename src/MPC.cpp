@@ -69,7 +69,7 @@ class FG_eval {
     fg[1 + cte_start] = vars[cte_start];
     fg[1 + epsi_start] = vars[epsi_start];
 
-    for (int l = 0; l < N -1 ; l++) {
+    for (int l = 0; l < N - 1 ; l++) {
 
       // t+1
       AD<double> x1 = vars[x_start + l + 1];
@@ -90,7 +90,7 @@ class FG_eval {
       AD<double> delta0 = vars[delta_start + l];
       AD<double> a0 = vars[a_start + l];
 
-      AD<double> f0 = coeffs[0] + coeffs[1] * x0 + coeffs[2] * x0 * x0 * coeffs[3] * x0 * x0 * x0;
+      AD<double> f0 = coeffs[0] + coeffs[1] * x0 + coeffs[2] * x0 * x0 + coeffs[3] * x0 * x0 * x0;
       AD<double> psides0 = CppAD::atan(3 * coeffs[3] * x0 * x0 + 2 * coeffs[2] * x0 + coeffs[1]);
 
       fg[2 + x_start + l] = x1 - (x0 + v0 * CppAD::cos(psi0) * dt);

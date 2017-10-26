@@ -114,8 +114,8 @@ int main() {
           //calculate cte and epsi
           double cte = polyeval(coeffs, 0);
 
-          //double epsi = psi - atan(coeffs[1] +2 *px *coeffs[2] +3* coeffs[3] * pow(px,2);
-          double epsi = -atan(coeffs[1]);
+          double epsi = psi - atan(coeffs[1] +2 *px *coeffs[2] +3* coeffs[3] * pow(px,2));
+          //double epsi = -atan(coeffs[1]);
 
           double steer_value = j[1]["steering_angle"];
           double throttle_value = j[1]["throttle"];
@@ -131,9 +131,12 @@ int main() {
           //Display the waypoints/reference line
           vector<double> next_x_vals;
           vector<double> next_y_vals;
+
           double poly_inc = 2.5;
-          int num_ponints = 25;
-          for (int k = 0; k < num_ponints; k++) {
+          int num_points = 25;
+
+          for (int k = 1; k < num_points; k++)
+          {
             next_x_vals.push_back(poly_inc * k);
             next_y_vals.push_back(polyeval(coeffs, poly_inc * k));
           }
@@ -142,10 +145,13 @@ int main() {
           vector<double> mpc_x_vals;
           vector<double> mpc_y_vals;
 
-          for (int l = 0; l < vars.size(); l++) {
+          for (int l = 2; l < vars.size(); l++)
+          {
             if (l % 2 == 0) {
               mpc_x_vals.push_back(vars[l]);
-            } else {
+            }
+            else
+            {
               mpc_y_vals.push_back(vars[l]);
             }
 
@@ -155,7 +161,7 @@ int main() {
           json msgJson;
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
           // Otherwise the values will be in between [-deg2rad(25), deg2rad(25] instead of [-1, 1].
-          msgJson["steering_angle"] = vars[0];// /(deg2rad(25)*Lf);
+          msgJson["steering_angle"] = vars[0] /(deg2rad(25)*Lf);
           msgJson["throttle"] = vars[1];
 
           msgJson["mpc_x"] = mpc_x_vals;
@@ -175,7 +181,7 @@ int main() {
           //
           // NOTE: REMEMBER TO SET THIS TO 100 MILLISECONDS BEFORE
           // SUBMITTING.
-          this_thread::sleep_for(chrono::milliseconds(100));
+          //this_thread::sleep_for(chrono::milliseconds(100));
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }
       } else {
