@@ -65,10 +65,14 @@ for (int k = 0; k \< N - 2; k  fg[0](#) += 150 * CppADpow(vars[delta_start + k 
 } 
 ```
 
-### Actuators
+### Update
 For each of the ten predicted steps, I would calculate optimal steering, and acceleration parameters to follow the trajectory. Even though I would only use the first step and scrap the other nine, this would help the vehicle to anticipate curves and brake not only when the apex of the curve was reached, like the PID controller, but already up to one second beforehand. 
 
 Each time step would be predicted using the following formula:
+
+![](modell.png "Modell")
+
+Which would result in the following code:
 ```cpp
 AD\<double\> f0 = coeffs[0](#) + coeffs[1](#) * x0 + coeffs[2](#) * x0 * x0 + coeffs[3](#) * x0 * x0 * x0;
 AD\<double\> psides0 = CppADatan(3 * coeffs[3](#) * x0 * x0 + 2 * coeffs[2](#) * x0 + coeffs[1](#));
@@ -80,7 +84,6 @@ fg[2 + v_start + l](#) = v1 - (v0 + a0 * dt);
 fg[2 + cte_start + l](#) = cte1 - ((f0 - y0) + (v0 * CppADsin(epsi0) * dt));
 fg[2 + epsi_start + l](#) = epsi1 - ((psi0 - psides0) - v0 * delta0 / Lf * dt);
 ```
-
 ## Timestep Length and Elapsed Duration (N & dt)
 
 I used ten time steps, each 100ms apart from each other. This were the first values I experimented with, and they proved sufficient. I tried 25 steps, and I tried a spacing of 200ms, but they either cost too much performance or caused the vehicle to jitter across the track.
@@ -111,6 +114,9 @@ state \<\< x_dt, y_dt, psi_dt, v_dt, cte_dt, epsi_dt;
 //generate the trajectory
 auto vars = mpc.Solve(state, coeffs);
 ```
+This let me set the state for the solver in this formula:
+
+![](state.png "State")
 
 ## Dependencies
 
