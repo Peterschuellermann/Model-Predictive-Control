@@ -48,17 +48,17 @@ class FG_eval {
     fg[0] = 0;
 
     for (int i = 0; i < N; i++) {
-      fg[0] += 2000 * CppAD::pow(vars[cte_start + i] - ref_cte, 2);
-      fg[0] += 2000 * CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
-      fg[0] += CppAD::pow(vars[v_start + i] - ref_v, 2);
+      fg[0] += 1500 * CppAD::pow(vars[cte_start + i] - ref_cte, 2);
+      fg[0] += 1500 * CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
+      fg[0] += 1*CppAD::pow(vars[v_start + i] - ref_v, 2);
     }
     for (int j = 0; j < N - 1; j++) {
-      fg[0] += 5 * CppAD::pow(vars[delta_start + j], 2);
-      fg[0] += 5 * CppAD::pow(vars[a_start + j], 2);
+      fg[0] += 10 * CppAD::pow(vars[delta_start + j], 2);
+      fg[0] += 10 * CppAD::pow(vars[a_start + j], 2);
     }
     for (int k = 0; k < N - 2; k++) {
-      fg[0] += 200 * CppAD::pow(vars[delta_start + k + 1] - vars[delta_start + k], 2);
-      fg[0] += 10 * CppAD::pow(vars[a_start + k + 1] - vars[a_start + k], 2);
+      fg[0] += 150 * CppAD::pow(vars[delta_start + k + 1] - vars[delta_start + k], 2);
+      fg[0] += 15 * CppAD::pow(vars[a_start + k + 1] - vars[a_start + k], 2);
 
     }
 
