@@ -102,11 +102,11 @@ int main() {
             ptsy[i] = (shiftx * sin(0 - psi) + shifty * cos(0 - psi));
           }
 
-          double *ptrx = &ptrx[0];
+          double* ptrx = &ptsx[0];
           Eigen::Map<Eigen::VectorXd> ptsx_transform(ptrx, 6);
 
-          double *ptry = &ptry[0];
-          Eigen::Map<Eigen::VectorXd> ptsy_transform(ptrx, 6);
+          double* ptry = &ptsy[0];
+          Eigen::Map<Eigen::VectorXd> ptsy_transform(ptry, 6);
 
           auto coeffs = polyfit(ptsx_transform, ptsy_transform, 3);
 
@@ -117,7 +117,7 @@ int main() {
           //double epsi = psi - atan(coeffs[1] +2 *px *coeffs[2] +3* coeffs[3] * pow(px,2);
           double epsi = -atan(coeffs[1]);
 
-          double steer_value = j[1]["steering angle"];
+          double steer_value = j[1]["steering_angle"];
           double throttle_value = j[1]["throttle"];
 
           Eigen::VectorXd state(6);
