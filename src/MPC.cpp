@@ -22,7 +22,7 @@ const double Lf = 2.67;
 
 double ref_cte = 0;
 double ref_epsi = 0;
-double ref_v = 100;
+double ref_v = 80;
 
 size_t x_start = 0;
 size_t y_start = x_start + N;
@@ -48,8 +48,8 @@ class FG_eval {
     fg[0] = 0;
 
     for (int i = 0; i < N; i++) {
-      fg[0] += 1500 * CppAD::pow(vars[cte_start + i] - ref_cte, 2);
-      fg[0] += 1500 * CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
+      fg[0] += 2000 * CppAD::pow(vars[cte_start + i] - ref_cte, 2);
+      fg[0] += 2000 * CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
       fg[0] += 1*CppAD::pow(vars[v_start + i] - ref_v, 2);
     }
     for (int j = 0; j < N - 1; j++) {
@@ -112,7 +112,7 @@ MPC::~MPC() {}
 
 vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   bool ok = true;
-  size_t i;
+
   typedef CPPAD_TESTVECTOR(double) Dvector;
 
   double x = state[0];
