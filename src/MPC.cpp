@@ -59,7 +59,6 @@ class FG_eval {
     for (int k = 0; k < N - 2; k++) {
       fg[0] += 150 * CppAD::pow(vars[delta_start + k + 1] - vars[delta_start + k], 2);
       fg[0] += 15 * CppAD::pow(vars[a_start + k + 1] - vars[a_start + k], 2);
-
     }
 
     fg[1 + x_start] = vars[x_start];

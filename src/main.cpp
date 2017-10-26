@@ -134,14 +134,12 @@ int main() {
           const double epsi_dt = epsi + v * (-delta)/Lf * dt;
 
 
-
           Eigen::VectorXd state(6);
           //state << 0, 0, 0, v, cte, epsi;
           state << x_dt, y_dt, psi_dt, v_dt, cte_dt, epsi_dt;
 
 
-
-              //generate the trajectory
+          //generate the trajectory
           auto vars = mpc.Solve(state, coeffs);
 
           //Display the waypoints/reference line
