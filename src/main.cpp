@@ -117,8 +117,8 @@ int main() {
           //calculate cte and epsi
           double cte = polyeval(coeffs, 0);
 
-          double epsi = psi - atan(coeffs[1] +2 *px *coeffs[2] +3* coeffs[3] * pow(px,2));
-          //double epsi = -atan(coeffs[1]);
+          //double epsi = psi - atan(coeffs[1] +2 *px *coeffs[2] +3* coeffs[3] * pow(px,2));
+          double epsi = -atan(coeffs[1]);
 
 //          double steer_value = j[1]["steering_angle"];
 //          double throttle_value = j[1]["throttle"];
